@@ -1,0 +1,61 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<html>
+	<table>
+		<tr>
+			<td>
+				<input type="text" id="number"></input>
+			</td>
+			<td>
+				<input type="button" id="btnAddToStack" value="Push To Stack"></input>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="button" id="btnPrintStack" value="Print Stack"></input>
+			</td>
+			<td>
+				<input type="button" id="btnPopFromStack" value="Pop From Stack"></input>
+			</td>
+		</tr>
+	</table>
+</html>
+<script>
+function CustomStack()
+{
+	this.size = 0;
+	this.dataContainer = {};
+}
+CustomStack.prototype.push = function(data){
+	var size = ++this.size;
+	this.dataContainer[size] = data;	
+};
+CustomStack.prototype.pop = function(){
+	var size = this.size;
+	if(size)
+	{
+		var deletedData = this.dataContainer[size];
+		this.size--;
+		delete this.dataContainer[size];
+		return deletedData;
+	}
+};
+$( document ).ready(function() {
+	var stack = new CustomStack();
+    $('#btnAddToStack').click(function(){
+		stack.push($('#number').val());
+		alert("Number pushed onto stack..!!");
+	});
+	$('#btnPopFromStack').click(function(){
+		stack.pop();
+		alert("Number popped from stack..!!");
+	});
+	$('#btnPrintStack').click(function(){
+		var arr = [];
+		$.each(stack.dataContainer,function(index,dataNum){
+			arr.push(dataNum);
+		});
+		alert(arr);
+	});
+	
+});
+</script>
