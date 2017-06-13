@@ -1,0 +1,64 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<html>
+	<table>
+		<tr>
+			<td>
+				<input type="text" id="number"></input>
+			</td>
+			<td>
+				<input type="button" id="btnEnqueue" value="Enqueue"></input>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<input type="button" id="btnPrintQueue" value="Print Queue"></input>
+			</td>
+			<td>
+				<input type="button" id="btnDequeue" value="Dequeue"></input>
+			</td>
+		</tr>
+	</table>
+</html>
+<script>
+function CustomQueue()
+{
+	this.oldIndex = 1;
+	this.newIndex = 1;
+	this.dataContainer = {};
+}
+CustomQueue.prototype.Enqueue = function(data){
+	this.dataContainer[this.newIndex] = data;	
+	this.newIndex++;
+};
+CustomQueue.prototype.Dequeue = function(){
+	var size = this.newIndex - this.oldIndex;
+	if(this.newIndex != this.oldIndex)
+	{
+		var deletedData = this.dataContainer[this.oldIndex];
+		delete this.dataContainer[this.oldIndex];
+		this.oldIndex++;
+		
+		return deletedData;
+	}
+	
+};
+$( document ).ready(function() {
+	var queue = new CustomQueue();
+    $('#btnEnqueue').click(function(){
+		queue.Enqueue($('#number').val());
+		alert("Number Enqueued..!!");
+	});
+	$('#btnDequeue').click(function(){
+		queue.Dequeue();
+		alert("Number Dequeued..!!");
+	});
+	$('#btnPrintQueue').click(function(){
+		var arr = [];
+		$.each(queue.dataContainer,function(index,dataNum){
+			arr.push(dataNum);
+		});
+		alert(arr);
+	});
+	
+});
+</script>
